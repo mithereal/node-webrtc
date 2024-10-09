@@ -1,0 +1,23 @@
+services:
+  database:
+    image: mysql
+    environment:
+      - MYSQL_USER="${MYSQL_USER}"
+      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
+      - MYSQL_DB="${MYSQL_DATABASE}"
+    ports:
+      - "${MYSQL_LOCAL_MACHINE_PORT:-55432}:5432"
+    volumes:
+      - prototype-db-data:/var/lib/mysql/data
+  test_database:
+    image: mysql
+    environment:
+      - MYSQL_USER="${MYSQL_USER}"
+      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
+      - MYSQL_DB="${MYSQL_DATABASE}"
+    env_file:
+      - .env
+    ports:
+      - "${MYSQL_TEST_MACHINE_PORT:-55433}:5432"
+volumes:
+  prototype-db-data:
